@@ -83,7 +83,8 @@ pytest                 # Run tests
 
 Or run all pre-commit hooks manually:
 ```bash
-m```
+pre-commit run --all-files
+```
 
 ### Writing Tests
 
