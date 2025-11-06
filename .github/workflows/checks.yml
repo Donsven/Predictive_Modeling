@@ -6,36 +6,57 @@ on:
     branches: [main]
 
 jobs:
-  quality-checks:
+  format-check:
+    name: Format Check
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+      - run: pip install ruff
+      - run: ruff format --check .
 
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install ruff mypy pytest bandit
-          # Uncomment when you have requirements.txt
-          # pip install -r requirements.txt
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install ruff
+      - run: ruff check .
 
-      - name: Ruff format check
-        run: ruff format --check .
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install mypy
+      - run: mypy . --install-types --non-interactive || true
 
-      - name: Ruff lint
-        run: ruff check .
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install bandit
+      - run: bandit -r . -ll || true
 
-      - name: Type check with mypy
-        run: mypy . --install-types --non-interactive || true
-
-      - name: Security check with bandit
-        run: bandit -r . -ll || true
-
-      - name: Run tests
-        run: pytest -v
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install pytest
+      - run: pytest -v
