@@ -55,6 +55,7 @@ dmypy.json
 *.joblib
 data/raw/
 data/processed/
+claude/
 
 # Models
 models/*.pkl
