@@ -1,6 +1,6 @@
 # Welcome to the Team!
 
-Glad to have you onboard for our predictive modeling project! During these early weeks while you're getting familiar, here are a few things I'd like you all to brush up on:
+Glad to have you onboard for our predictive modeling project! While you get familiar, here are a few things I'd like you all to brush up on:
 
 ## 1. Linear Regression
 
