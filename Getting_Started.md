@@ -45,6 +45,67 @@ Pretty obvious and not too hard. There's lots of great resources out there, but 
 
 **Resource:** [futurecoder.io](https://futurecoder.io)
 
-## 4. What's Next?
+## 4. CI/CD and Code Quality Tools
 
-There will be other things as we go along, such as **CI/CD workflows**. We can touch on those later.
+We have automated code quality checks that run on every pull request. Here's what you need to know:
+
+### What Gets Checked Automatically
+
+Every time you open a PR, GitHub Actions will automatically run:
+- **Ruff format** - Ensures code formatting consistency
+- **Ruff lint** - Checks code quality and style
+- **mypy** - Type checking for better code reliability
+- **bandit** - Security scanning
+- **pytest** - Runs all tests
+
+### Setting Up Your Local Environment
+
+Install the development tools:
+```bash
+pip install ruff mypy pytest bandit pre-commit
+```
+
+Install pre-commit hooks (highly recommended - runs checks before each commit):
+```bash
+pre-commit install
+```
+
+### Running Checks Locally
+
+Before pushing your code, you can run these commands to catch issues early:
+
+```bash
+ruff format .          # Auto-format your code
+ruff check --fix .     # Lint and auto-fix issues
+mypy .                 # Check types
+pytest                 # Run tests
+```
+
+Or run all pre-commit hooks manually:
+```bash
+pre-commit run --all-files
+```
+
+### Writing Tests
+
+All tests go in the `tests/` directory. Example test structure:
+
+```python
+def test_data_preprocessing():
+    """Test that preprocessing removes null values."""
+    raw_data = load_sample_data()
+    processed = preprocess(raw_data)
+    assert not processed.isnull().any().any()
+```
+
+For ML projects, focus on testing:
+- Data preprocessing functions
+- Model input/output validation
+- Feature engineering logic
+- Edge cases and data quality
+
+This is to be updated...
+
+## 5. What's Next?
+
+TBD

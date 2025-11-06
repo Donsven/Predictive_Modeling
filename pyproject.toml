@@ -1,0 +1,59 @@
+[project]
+name = "predictive-modeling"
+version = "0.1.0"
+description = "Predictive modeling project using linear regression"
+requires-python = ">=3.11"
+
+[tool.ruff]
+# Line length to match Black's default
+line-length = 88
+target-version = "py311"
+
+# Exclude common directories
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+# Enable these rule categories:
+# E/W - pycodestyle errors and warnings
+# F - pyflakes
+# I - isort (import sorting)
+# N - pep8-naming
+# UP - pyupgrade (modernize Python code)
+# B - flake8-bugbear (find likely bugs)
+select = ["E", "F", "I", "N", "UP", "B", "W"]
+
+# Allow autofix for all enabled rules
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore import rules in __init__.py files
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false  # Set to true when you want stricter type checking
+ignore_missing_imports = true  # Useful for ML libraries without type stubs
+
+# Incremental type checking
+incremental = true
+cache_dir = ".mypy_cache"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+addopts = "-v --tb=short"
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv", "venv"]
+skips = ["B101"]  # Skip assert_used warning (common in tests)

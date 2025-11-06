@@ -1,0 +1,41 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install ruff mypy pytest bandit
+          # Uncomment when you have requirements.txt
+          # pip install -r requirements.txt
+
+      - name: Ruff format check
+        run: ruff format --check .
+
+      - name: Ruff lint
+        run: ruff check .
+
+      - name: Type check with mypy
+        run: mypy . --install-types --non-interactive || true
+
+      - name: Security check with bandit
+        run: bandit -r . -ll || true
+
+      - name: Run tests
+        run: pytest -v
