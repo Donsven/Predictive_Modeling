@@ -7,7 +7,7 @@ import databento as db
 # -------------------
 # 1. Config
 # -------------------
-API_Key = "db-58uvdCKemq77SsUNGXEhs3jQd4Sv5"
+
 DATASET = "GLBX.MDP3"  # CME Globex futures dataset
 SYMBOL = "CL.n.0"  # Front-month continuous WTI Crude futures
 STYPE_IN = "continuous"
@@ -17,7 +17,13 @@ today = dt.date.today()
 start_date = (today - dt.timedelta(days=365 * 2)).isoformat()
 end_date = today.isoformat()
 
-client = db.Historical(API_Key)  # uses DATABENTO_API_KEY env var
+
+api_key = os.getenv("DATABENTO_API_KEY")
+if not api_key:
+    raise RuntimeError(
+        "DATABENTO_API_KEY is not set. Please set it in your environment."
+    )
+client = db.Historical(api_key)  # uses DATABENTO_API_KEY env var
 
 # -------------------
 #  Daily OHLCV data
