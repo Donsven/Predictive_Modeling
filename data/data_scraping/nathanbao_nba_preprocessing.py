@@ -97,7 +97,9 @@ def consistency_checks(df: pd.DataFrame) -> pd.DataFrame:
     for col in ["PTS", "REB", "AST"]:
         neg_mask = df[col] < 0
         if neg_mask.any():
-            print(f"  WARNING: {neg_mask.sum()} row(s) with negative {col} -- dropping.")
+            print(
+                f"  WARNING: {neg_mask.sum()} row(s) with negative {col} -- dropping."
+            )
             df = df[~neg_mask]
 
     # Recompute PRA to guarantee consistency after capping/dropping
