@@ -89,9 +89,12 @@ def run_pipeline():
 
     # --- Compare all three ---
     print("\n--- Ridge vs Lasso vs ElasticNet ---")
-    print(f"  Ridge R²:      {ridge_metrics['r2']:.4f}  |  MAE: {ridge_metrics['mae']:.3f}")
-    print(f"  Lasso R²:      {lasso_metrics['r2']:.4f}  |  MAE: {lasso_metrics['mae']:.3f}")
-    print(f"  ElasticNet R²: {enet_metrics['r2']:.4f}  |  MAE: {enet_metrics['mae']:.3f}")
+    for label, m in [
+        ("Ridge", ridge_metrics),
+        ("Lasso", lasso_metrics),
+        ("ElasticNet", enet_metrics),
+    ]:
+        print(f"  {label:<10} R²: {m['r2']:.4f}  |  MAE: {m['mae']:.3f}")
 
     return {"ridge": ridge, "lasso": lasso, "elasticnet": enet_cv}, {
         "ridge": ridge_metrics,

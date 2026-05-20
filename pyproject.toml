@@ -37,7 +37,7 @@ unfixable = []
 # Ignore import rules in __init__.py files
 "__init__.py" = ["F401", "N999"]
 # X_train, X_test, X are standard ML naming conventions
-"Sports_predictions/**" = ["N806", "N999"]
+"Sports_predictions/**" = ["N806", "N803", "N999"]
 "data/**" = ["N806"]
 
 [tool.mypy]
